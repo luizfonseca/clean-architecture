@@ -13,13 +13,12 @@ module UseCases
       def initialize; end
 
       def perform(username)
-        fetch_latest_api_posts(username)
+        list_profiles_matching_username(username)
       end
 
       private
 
-      # Find users named "Adam" with more than 42 repos and 1000 followers
-      def fetch_latest_api_posts(username)
+      def list_profiles_matching_username(username)
         response = HttpRequest.client.get "https://api.github.com/search/users?q=#{username}"
         json_response = MultiJson.load(response.body, symbolize_keys: true)
 
