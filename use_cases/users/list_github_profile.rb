@@ -27,7 +27,7 @@ module UseCases
       def sorted_profiles_by_id_asc(items)
         items.map! { |profile| transform_to_github_profile(profile) }
 
-        items.sort_by { |profile| profile[:id].to_i }
+        items.sort_by { |profile| profile[:id] }
       end
 
       def transform_to_github_profile(github_profile)
