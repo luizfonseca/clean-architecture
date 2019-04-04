@@ -1,11 +1,9 @@
 require 'faraday'
-require './lib/http_request_interactor'
+require './lib/http_request_handler'
 
 module UseCases
   module Users
     class ListGithubProfilesByUsername
-      include HttpRequestInteractor
-
       def self.perform(search_param)
         new.perform(search_param)
       end
@@ -19,15 +17,13 @@ module UseCases
       private
 
       def list_profiles_matching_username(username)
-        response = HttpRequestInteractor.client.get "https://api.github.com/search/users?q=#{username}"
+        response = HttpRequestHandler.client.get "https://api.github.com/search/users?q=#{username}"
 
-        handle_response(response) do
-          json_response = MultiJson.load(response.body, symbolize_keys: true)
-
-          sorted_profiles_by_id_asc json_response[:items]
+        HttpRequestHandler.handle_response(response) do |parse_response_body|
+          sorted_profiles_by_id_asc parse_response_body[:items]
         end
 
-      rescue HttpRequestInteractor::Error => error
+      rescue HttpRequestHandler::Error => error
         raise StandardError, "Failed to communicate with Github. #{error}"
       end
 
