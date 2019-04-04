@@ -4,6 +4,7 @@ require './lib/http_request_interactor'
 module UseCases
   module Users
     class ListGithubProfilesByUsername
+      include HttpRequestInteractor
 
       def self.perform(search_param)
         new.perform(search_param)
@@ -19,13 +20,19 @@ module UseCases
 
       def list_profiles_matching_username(username)
         response = HttpRequestInteractor.client.get "https://api.github.com/search/users?q=#{username}"
-        json_response = MultiJson.load(response.body, symbolize_keys: true)
 
-        sorted_profiles_by_id_asc json_response[:items]
+        handle_response(response) do
+          json_response = MultiJson.load(response.body, symbolize_keys: true)
+
+          sorted_profiles_by_id_asc json_response[:items]
+        end
+
+      rescue HttpRequestInteractor::Error => error
+        raise StandardError, "Failed to communicate with Github. #{error}"
       end
 
       def sorted_profiles_by_id_asc(items)
-        items.map! { |profile| transform_to_github_profile(profile) }
+        items&.map! { |profile| transform_to_github_profile(profile) }
 
         items.sort_by { |profile| profile[:id] }
       end

@@ -18,5 +18,6 @@ PassengerServer.route 'users' do |r|
 end
 
 PassengerServer.error do |exception|
-  puts exception
+  p exception
+  { code: 'PAS-001', message: 'Failed to communicate with External Service.' }
 end
