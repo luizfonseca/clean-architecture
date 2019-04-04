@@ -1,0 +1,39 @@
+GIT
+  remote: https://github.com/jeremyevans/roda
+  revision: 7916a14e529a7a22a3b1861abe941b39d18deef0
+  ref: 7916a14e529a7a22a3b1861abe941b39d18deef0
+  specs:
+    roda (3.18.0)
+      rack
+
+GEM
+  remote: https://rubygems.org/
+  specs:
+    faraday (0.15.4)
+      multipart-post (>= 1.2, < 3)
+    faraday-http-cache (2.0.0)
+      faraday (~> 0.8)
+    multi_json (1.13.1)
+    multipart-post (2.0.0)
+    oj (3.7.11)
+    puma (3.12.1)
+    rack (2.0.7)
+    sequel (5.19.0)
+
+PLATFORMS
+  ruby
+
+DEPENDENCIES
+  faraday
+  faraday-http-cache
+  multi_json
+  oj
+  puma
+  roda!
+  sequel
+
+RUBY VERSION
+   ruby 2.6.2p47
+
+BUNDLED WITH
+   1.17.2
