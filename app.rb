@@ -26,5 +26,9 @@ class PassengerServer < Roda
   status_handler 404 do
     { code: 'PAS-404', message: 'The page you are looking for doesn\'t exist.' }
   end
+
+  status_handler 500 do
+    { code: 'PAS-500', message: 'An error occured.' }
+  end
 end
 

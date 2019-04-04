@@ -1,7 +1,7 @@
 require 'faraday'
 require 'faraday-http-cache'
 
-module HttpRequest
+module HttpRequestInteractor
   def self.client
     Faraday.new do |builder|
       builder.use Faraday::HttpCache

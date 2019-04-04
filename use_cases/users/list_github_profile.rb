@@ -1,10 +1,9 @@
 require 'faraday'
-require './lib/http_request'
+require './lib/http_request_interactor'
 
 module UseCases
   module Users
     class ListGithubProfilesByUsername
-      # include UseCases::Common
 
       def self.perform(search_param)
         new.perform(search_param)
@@ -19,7 +18,7 @@ module UseCases
       private
 
       def list_profiles_matching_username(username)
-        response = HttpRequest.client.get "https://api.github.com/search/users?q=#{username}"
+        response = HttpRequestInteractor.client.get "https://api.github.com/search/users?q=#{username}"
         json_response = MultiJson.load(response.body, symbolize_keys: true)
 
         sorted_profiles_by_id_asc json_response[:items]
