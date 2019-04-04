@@ -3,7 +3,7 @@ require './lib/http_request'
 
 module UseCases
   module Users
-    class ShowGithubProfile
+    class ListGithubProfilesByUsername
       # include UseCases::Common
 
       def self.perform(search_param)
@@ -31,8 +31,13 @@ module UseCases
         items.sort_by { |profile| profile[:id].to_i }
       end
 
-      def transform_to_github_profile(profile)
-        Presenters::GithubProfile.new(profile).as_json
+      def transform_to_github_profile(github_profile)
+        GithubProfile.new(
+          id: github_profile.fetch(:id),
+          username: github_profile.fetch(:login),
+          avatar_url: github_profile.fetch(:avatar_url),
+          profile_url: github_profile.fetch(:html_url)
+        ).as_json
       end
     end
   end

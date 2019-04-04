@@ -19,6 +19,7 @@ class PassengerServer < Roda
   route(&:multi_route)
 
   Dir['./routes/**/*.rb',
+      './models/**/*.rb',
       './use_cases/**/*.rb',
       './presenters/**/*.rb'].each { |f| require f }
 

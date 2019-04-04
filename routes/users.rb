@@ -7,7 +7,7 @@ PassengerServer.route 'users' do |r|
 
   r.get String do |username_to_search|
     response.cache_control public: true, max_age: 60
-    UseCases::Users::ShowGithubProfile.perform(username_to_search)
+    UseCases::Users::ListGithubProfilesByUsername.perform(username_to_search)
   end
 
   r.post 'anonymize', String do |user_id|
