@@ -32,9 +32,9 @@ module UseCases
 
       def transform_to_github_profile(github_profile)
         GithubProfile.new(
-          id: github_profile.fetch(:id),
-          username: github_profile.fetch(:login),
-          avatar_url: github_profile.fetch(:avatar_url),
+          id:          github_profile.fetch(:id),
+          username:    github_profile.fetch(:login),
+          avatar_url:  github_profile.fetch(:avatar_url),
           profile_url: github_profile.fetch(:html_url)
         ).as_json
       end
